@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://gngckdnf24yi"]
+
+[ext_resource type="Script" uid="uid://bn37tjykpyfx3" path="res://control.gd" id="1_ig7tw"]
+
+[node name="Control" type="Control" unique_id=576549277]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ig7tw")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1874621849]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
