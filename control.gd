@@ -1,13 +1,16 @@
 extends Control
 
-const boardWidth = 8;
-const boardHeight = 8;
-const numOfCorrectCells = 40;
+# For random board generation ===================
+var boardWidth = 6;
+var boardHeight = 2;
+var numOfCorrectCells = 1;
+# ===============================================
 var board = [];
 var correctCells = [];
 var columnClues = {}
 var rowClues = {}
 @onready var grid = $GridContainer
+@onready var center_container =  $CenterContainer
 const IMAGE_X = preload("res://x-transparent-background-red.png")
 
 # Called when the node enters the scene tree for the first time.
@@ -15,12 +18,18 @@ func _ready() -> void:
 	create_board();
 	draw_board();
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 func create_board():
+	# If valid number entered (1-), choose a board, otherwise generate random
+	if choose_board(5):
+		calculate_clues()
+		find_correct_cells()
+		print_board_data()
+		return
+	
 	# Check if numOfCorrectCells is valid, to prevent infinite loop/errors
 	if numOfCorrectCells > boardHeight * boardWidth or numOfCorrectCells < 0:
 		print("Invalid number of correct cells! (", numOfCorrectCells, ")");
@@ -40,9 +49,13 @@ func create_board():
 			if [i, j] in correctCells: board[i].append(1);
 			else: board[i].append(0);
 	
+	calculate_clues()
 	
+	print_board_data()
+
+func calculate_clues():
 	# Calculate the clues for each row and column
-	for i in range(boardHeight):
+	for i in range(board.size()):
 		rowClues[i] = []
 		var sum = 0
 		for val in board[i]:
@@ -52,19 +65,25 @@ func create_board():
 				sum = 0
 		if sum > 0: rowClues[i].append(sum) # Check final time after we exit loop
 		if not rowClues[i]: rowClues[i].append(0) # If array is empty, add 0
-	
-	for i in range(boardWidth):
+
+	for i in range(board[0].size()):
 		columnClues[i] = []
 		var sum = 0
-		for j in range(boardHeight):
+		for j in range(board.size()):
 			var val = board[j][i]
 			if val == 1: sum += 1;
 			elif sum > 0:
 				columnClues[i].append(sum)
 				sum = 0
 		if sum > 0: columnClues[i].append(sum)
-		if not columnClues[i]: columnClues[i].append(0) # If array is empty, add 0
-	
+		if not columnClues[i]: columnClues[i].append(0)
+
+func find_correct_cells():
+	for i in board.size():
+		for j in board[0].size():
+			if board[i][j] == 1: correctCells.append([i, j])
+
+func print_board_data():
 	# Print (for debugging purposes)
 	print("correctCells: ", correctCells)
 	for b in board:
@@ -73,10 +92,10 @@ func create_board():
 	print("columnClues: ", columnClues)
 
 func draw_board():
-	grid.columns = boardWidth+1;
+	grid.columns = board[0].size()+1;
 	
-	for y in range(boardHeight + 1): # + 1 for the extra row & column of labels
-		for x in range(boardWidth + 1):
+	for y in range(board.size() + 1): # + 1 for the extra row & column of labels
+		for x in range(board[0].size() + 1):
 			# Leave top left corner empty
 			if x == 0 and y == 0:
 				grid.add_child(Label.new());
@@ -98,88 +117,15 @@ func draw_board():
 				grid.add_child(label)
 				continue;
 			
-			var val = board[y-1][x-1]
 			var c = Cell.new(x, y)
-			#var button = Button.new()
-			#button.custom_minimum_size = Vector2(50,50)
-			#button.add_theme_stylebox_override("normal", get_button_style("normal"))
-			#button.add_theme_stylebox_override("hover", get_button_style("hover"))
-			#button.set_meta("pressed", false)
-			#button.set_meta("crossed", false)
-			#button.gui_input.connect(_on_button_gui_input.bind(x, y, button))
-			#button.expand_icon = true; # Resize image to fit in button
 			grid.add_child(c);
-			c.pressed.connect(check_win)
-
-func get_button_style(type):
-	# Color for unpressed button
-	var style_normal = StyleBoxFlat.new()
-	style_normal.bg_color = Color(1.0, 1.0, 1.0)
-	style_normal.border_color = Color(0.444, 0.432, 0.432, 0.988)
-	style_normal.border_width_left = 2
-	style_normal.border_width_right = 2
-	style_normal.border_width_top = 2
-	style_normal.border_width_bottom = 2
-	
-	# Hover color for unpressed button
-	var style_hover = StyleBoxFlat.new()
-	style_hover.bg_color = Color(0.537, 0.537, 0.537, 1.0)
-	
-	# Color for pressed button
-	var style_dark =  StyleBoxFlat.new()
-	style_dark.bg_color = Color(0.0, 0.0, 0.0, 1.0)
-	style_dark.border_color = Color(0.181, 0.175, 0.175, 0.988)
-	style_dark.border_width_left = 2
-	style_dark.border_width_right = 2
-	style_dark.border_width_top = 2
-	style_dark.border_width_bottom = 2
-	
-	# Hover color for pressed button
-	var style_hover_dark = StyleBoxFlat.new()
-	style_hover_dark.bg_color = Color(0.162, 0.162, 0.162, 1.0)
-	
-	if type == "normal": return style_normal
-	elif type == "hover": return style_hover
-	elif type == "dark": return style_dark
-	elif type == "hover_dark": return style_hover_dark
-
-func _on_button_gui_input(event, x, y, button):
-	if event is not InputEventMouseButton: return # Only handle clicks
-	
-	# If button was pressed then unpressed, and mouse stayed within button boundaries
-	if not event.pressed and button.get_global_rect().has_point(get_global_mouse_position()):
-		if event.button_index == MOUSE_BUTTON_LEFT: _on_left_click_press(x, y, button)
-		elif event.button_index == MOUSE_BUTTON_RIGHT: _on_right_click_press(x, y, button)
-
-func _on_left_click_press(x, y, button):
-	print("Button pressed: x: ",x,", y: ",y, ", grid-index: ",button.get_index(), ", pressed?(meta): ", button.get_meta("pressed"))
-	if button.get_meta('crossed'): return; # Do nothing if cell is crossed
-	# Update pressed state and colors
-	button.set_meta("pressed", not button.get_meta("pressed"))
-	if button.get_meta("pressed"):
-		button.add_theme_stylebox_override("normal", get_button_style("dark"))
-		button.add_theme_stylebox_override("hover", get_button_style("hover_dark"))
-	else:
-		button.add_theme_stylebox_override("normal", get_button_style("normal"))
-		button.add_theme_stylebox_override("hover", get_button_style("hover"))
-	
-	if check_win(): print('GAME COMPLETE!');
-
-func _on_right_click_press(x, y, button):
-	print("Right clicked: x: ",x,", y: ",y, ", grid-index: ",button.get_index(), ", pressed?(meta): ", button.get_meta("pressed"))
-	if button.get_meta('pressed'): return; # Do nothing if cell is pressed
-	button.set_meta('crossed', not button.get_meta('crossed'));
-	if button.get_meta('crossed'):
-		button.icon = IMAGE_X
-	else:
-		button.icon = null
+			c.pressed.connect(check_win) # Check for win on each new cell click
 
 func check_win():
 	# Convert x-y coordinates to flat-sequential grid index
-	print('CHECKING WIN')
 	var correct_indices = []
 	for coords in correctCells:
-		var index = (boardWidth+1) + ((boardWidth+1) * coords[0]) + coords[1] + 1
+		var index = (board[0].size()+1) + ((board[0].size()+1) * coords[0]) + coords[1] + 1
 		correct_indices.append(index)
 	
 	# Return false if correct cells and pressed cells don't match exactly
@@ -188,5 +134,70 @@ func check_win():
 		if child.get_index() in correct_indices and not child.is_pressed: return false;
 		if child.is_pressed and child.get_index() not in correct_indices: return false;
 	
+	# Victory sequence
 	print('-------------------YOU WIN!!!---------------------')
+	center_container.scale = Vector2(0,0)
+	center_container.show()
+	var tween = create_tween()
+
+	tween.tween_property(
+		center_container,
+		"scale",
+		Vector2(1,1),
+		0.3
+	)
+	
 	return true
+
+func choose_board(difficulty):
+	# Smiley-face
+	if difficulty == 1:
+		board = [
+			[0,0,0,0,0,0],
+			[0,1,0,0,1,0],
+			[0,0,0,0,0,0],
+			[1,0,0,0,0,1],
+			[0,1,1,1,1,0],
+			[0,0,0,0,0,0]
+		]
+		return true # Return true if a board was selected
+	
+	# Heart
+	elif difficulty == 2:
+		board = [
+			[0,1,0,0,0,1,0],
+			[1,1,1,0,1,1,1],
+			[1,1,1,1,1,1,1],
+			[1,1,1,1,1,1,1],
+			[0,1,1,1,1,1,0],
+			[0,0,1,1,1,0,0],
+			[0,0,0,1,0,0,0]
+		]
+		return true
+	
+	# Star
+	elif difficulty == 3:
+		board = [
+			[0, 0, 1, 0, 0],
+			[0, 1, 1, 1, 0],
+			[1, 1, 1, 1, 1],
+			[0, 1, 1, 1, 0],
+			[0, 1, 0, 1, 0]
+		]
+		return true
+	
+	# Alien
+	elif difficulty == 4:
+		board = [
+			[0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+			[0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
+			[0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+			[0, 1, 1, 0, 1, 1, 0, 1, 1, 0],
+			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+			[1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+			[1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+			[0, 0, 0, 1, 1, 1, 1, 0, 0, 0]
+		]
+		return true
+	
+	else: return false
