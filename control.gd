@@ -1,15 +1,15 @@
 extends Control
 
 # For random board generation ===================
-var boardWidth = 6;
-var boardHeight = 2;
-var numOfCorrectCells = 1;
+var boardWidth = 15;
+var boardHeight = 15;
+var numOfCorrectCells = 5;
 # ===============================================
 var board = [];
 var correctCells = [];
 var columnClues = {}
 var rowClues = {}
-@onready var grid = $GridContainer
+@onready var grid = $GameCenterContainer/GridContainer
 @onready var center_container =  $CenterContainer
 const IMAGE_X = preload("res://x-transparent-background-red.png")
 
@@ -23,8 +23,8 @@ func _process(delta: float) -> void:
 	pass
 
 func create_board():
-	# If valid number entered (1-), choose a board, otherwise generate random
-	if choose_board(5):
+	# If file name or valid number entered (1-4), choose a board, otherwise generate random
+	if choose_board('game_board.json'):
 		calculate_clues()
 		find_correct_cells()
 		print_board_data()
@@ -34,6 +34,7 @@ func create_board():
 	if numOfCorrectCells > boardHeight * boardWidth or numOfCorrectCells < 0:
 		print("Invalid number of correct cells! (", numOfCorrectCells, ")");
 		return
+		# DO SOMETHING ELSE HERE, CAUSES ERROR
 	
 	
 	# Generate random cells, store in correctCells
@@ -118,8 +119,14 @@ func draw_board():
 				continue;
 			
 			var c = Cell.new(x, y)
-			grid.add_child(c);
+			# Dynamically sizing the buttons
+			c.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+			c.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			var size = 500 / max(board.size(), board[0].size())
+			c.custom_minimum_size = Vector2(size, size)
+			
 			c.pressed.connect(check_win) # Check for win on each new cell click
+			grid.add_child(c);
 
 func check_win():
 	# Convert x-y coordinates to flat-sequential grid index
@@ -150,8 +157,13 @@ func check_win():
 	return true
 
 func choose_board(difficulty):
+	# Load from JSON file
+	if difficulty is String:
+		load_board_from_file(difficulty)
+		return true
+		
 	# Smiley-face
-	if difficulty == 1:
+	elif difficulty == 1:
 		board = [
 			[0,0,0,0,0,0],
 			[0,1,0,0,1,0],
@@ -201,3 +213,22 @@ func choose_board(difficulty):
 		return true
 	
 	else: return false
+
+func load_board_from_file(file_path):
+	if not FileAccess.file_exists(file_path):
+		print("Error: Level file not found!")
+		return
+		
+	# Open and parse the JSON file
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	var json_string = file.get_as_text()
+	file.close()
+	
+	var json = JSON.new()
+	var error = json.parse(json_string)
+	
+	if error == OK:
+		board = json.data
+		print("Successfully loaded Picross matrix: ", board)
+	else:
+		print("JSON Parse Error: ", json.get_error_message())

@@ -14,10 +14,15 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_ig7tw")
 
-[node name="GridContainer" type="GridContainer" parent="." unique_id=1874621849]
+[node name="GameCenterContainer" type="CenterContainer" parent="." unique_id=315131021]
+custom_minimum_size = Vector2(500, 500)
+layout_direction = 4
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 993.0
+offset_bottom = 591.0
+
+[node name="GridContainer" type="GridContainer" parent="GameCenterContainer" unique_id=1874621849]
+layout_mode = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1691755878]
 visible = false

@@ -20,7 +20,7 @@ func _init(x_coord: int, y_coords: int) -> void:
 
 func _on_button_gui_input(event):
 	if event is not InputEventMouseButton: return # Only handle clicks
-	
+
 	# If button was pressed then unpressed, and mouse stayed within button boundaries
 	if not event.pressed and get_global_rect().has_point(get_global_mouse_position()):
 		if event.button_index == MOUSE_BUTTON_LEFT: _on_left_click_press()
@@ -34,8 +34,6 @@ func _on_left_click_press():
 	is_pressed = not is_pressed
 	if is_pressed: set_style_dark()
 	else: set_style_normal()
-	
-	# if check_win(): print('GAME COMPLETE!');
 
 func _on_right_click_press():
 	print("Right clicked: x: ",x,", y: ",y, ", grid-index: ", get_index(), ", pressed?: ", is_pressed)
