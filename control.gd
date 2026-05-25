@@ -3,7 +3,7 @@ extends Control
 # For random board generation ===================
 var boardWidth = 15;
 var boardHeight = 15;
-var numOfCorrectCells = 5;
+var numOfCorrectCells = 1;
 # ===============================================
 var board = [];
 var correctCells = [];
@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 
 func create_board():
 	# If file name or valid number entered (1-4), choose a board, otherwise generate random
-	if choose_board('game_board.json'):
+	if choose_board("game_board.json"):
 		calculate_clues()
 		find_correct_cells()
 		print_board_data()
@@ -125,7 +125,7 @@ func draw_board():
 			var size = 500 / max(board.size(), board[0].size())
 			c.custom_minimum_size = Vector2(size, size)
 			
-			c.pressed.connect(check_win) # Check for win on each new cell click
+			c.pressed_change.connect(check_win) # Check for win on each new cell click
 			grid.add_child(c);
 
 func check_win():

@@ -6,6 +6,7 @@ var x: int;
 var y: int;
 var is_pressed: bool;
 var is_crossed: bool;
+signal pressed_change
 
 # Called when the node enters the scene tree for the first time.
 func _init(x_coord: int, y_coords: int) -> void:
@@ -16,13 +17,14 @@ func _init(x_coord: int, y_coords: int) -> void:
 	is_pressed = false;
 	is_crossed = false;
 	expand_icon = true;
-	gui_input.connect(_on_button_gui_input.bind())
+	gui_input.connect(_on_button_gui_input)
+	mouse_entered.connect(_on_mouse_entered)
 
 func _on_button_gui_input(event):
 	if event is not InputEventMouseButton: return # Only handle clicks
 
-	# If button was pressed then unpressed, and mouse stayed within button boundaries
-	if not event.pressed and get_global_rect().has_point(get_global_mouse_position()):
+	# If button was pressed, doesn't wait for unpress
+	if event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT: _on_left_click_press()
 		elif event.button_index == MOUSE_BUTTON_RIGHT: _on_right_click_press()
 
@@ -34,6 +36,9 @@ func _on_left_click_press():
 	is_pressed = not is_pressed
 	if is_pressed: set_style_dark()
 	else: set_style_normal()
+	
+	# Emit signal when button pressed status changes
+	pressed_change.emit()
 
 func _on_right_click_press():
 	print("Right clicked: x: ",x,", y: ",y, ", grid-index: ", get_index(), ", pressed?: ", is_pressed)
@@ -42,6 +47,10 @@ func _on_right_click_press():
 	is_crossed = not is_crossed
 	if is_crossed: icon = IMAGE_X
 	else: icon = null
+
+func _on_mouse_entered():
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT): _on_left_click_press()
+	elif Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT): _on_right_click_press()
 
 func set_style_normal():
 	# Color for unpressed button
