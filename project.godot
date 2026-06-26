@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Picross"
-run/main_scene="uid://gngckdnf24yi"
+run/main_scene="uid://oolm8gpd2t2s"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameSettings="*uid://cbsoih1yyad1"
 
 [physics]
 

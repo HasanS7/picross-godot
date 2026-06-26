@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://oolm8gpd2t2s"]
+
+[ext_resource type="Script" uid="uid://dvbijl2j7j6f5" path="res://main_menu.gd" id="1_wut1r"]
+[ext_resource type="FontFile" uid="uid://cuk7s25d8ycu4" path="res://Press_Start_2P_Font/PressStart2P-Regular.ttf" id="2_83s16"]
+
+[node name="Control" type="Control" unique_id=1122128974]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_wut1r")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=593014360]
+layout_mode = 0
+offset_right = 1155.0
+offset_bottom = 667.0
+
+[node name="Panel" type="Panel" parent="CenterContainer" unique_id=1521400229]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel" unique_id=2028740017]
+layout_mode = 0
+offset_left = -338.0
+offset_top = -227.0
+offset_right = 349.0
+offset_bottom = 214.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer" unique_id=1579095872]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=1935515057]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86514795, 0.8446717, 0.27056634, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_83s16")
+theme_override_font_sizes/font_size = 64
+text = "PICROSS"
+horizontal_alignment = 1
+
+[node name="Play" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=2101280899]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23971659, 0.7611195, 0, 1)
+theme_override_fonts/font = ExtResource("2_83s16")
+theme_override_font_sizes/font_size = 32
+text = "Play"
+
+[node name="OptionButton" type="OptionButton" parent="CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=577462241]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.029487979, 1, 0.97634834, 1)
+theme_override_fonts/font = ExtResource("2_83s16")
+theme_override_font_sizes/font_size = 30
+alignment = 1
+
+[node name="CustomSettingsContainer" type="PanelContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=1728097522]
+visible = false
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer" unique_id=739927051]
+layout_mode = 2
+
+[node name="WidthRow" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer" unique_id=1574404589]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/WidthRow" unique_id=569922567]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_83s16")
+text = "Width"
+
+[node name="SpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/WidthRow" unique_id=1386569744]
+layout_mode = 2
+min_value = 1.0
+max_value = 50.0
+value = 10.0
+
+[node name="HeightRow" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer" unique_id=1224891363]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/HeightRow" unique_id=21493303]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_83s16")
+text = "Height"
+
+[node name="SpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/HeightRow" unique_id=91152774]
+layout_mode = 2
+min_value = 1.0
+max_value = 50.0
+value = 10.0
+
+[node name="NumCorrectCellsRow" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer" unique_id=263190961]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/NumCorrectCellsRow" unique_id=1811925398]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_83s16")
+text = "Number of Cells"
+
+[node name="SpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/NumCorrectCellsRow" unique_id=1638228943]
+layout_mode = 2
+min_value = 1.0
+max_value = 2500.0
+value = 30.0
+
+[node name="LoadLevelRow" type="HBoxContainer" parent="CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=76235770]
+visible = false
+layout_mode = 2
+
+[node name="LoadLevelButton" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/LoadLevelRow" unique_id=427554710]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8538293, 0.86390084, 0.9926043, 1)
+theme_override_fonts/font = ExtResource("2_83s16")
+theme_override_font_sizes/font_size = 32
+text = "Select File"
+
+[node name="LevelNameLabel" type="Label" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/LoadLevelRow" unique_id=1229389431]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_83s16")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Exit" type="Button" parent="CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=219112064]
+custom_minimum_size = Vector2(250, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.17627075, 0.2509137, 1)
+theme_override_fonts/font = ExtResource("2_83s16")
+theme_override_font_sizes/font_size = 32
+text = "Exit"
+
+[node name="LevelFileDialog" type="FileDialog" parent="." unique_id=584484947]
+title = "Open a File"
+file_mode = 0
+
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="item_selected" from="CenterContainer/Panel/MarginContainer/VBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/LoadLevelRow/LoadLevelButton" to="." method="_on_load_level_button_pressed"]
+[connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="file_selected" from="LevelFileDialog" to="." method="_on_level_file_dialog_file_selected"]

@@ -21,3 +21,7 @@ mono_crash.*.json
 # System/OS specific ignores
 .DS_Store
 Thumbs.db
+
+# Custom local levels
+/Custom_Levels/*
+!/Custom_Levels/.gitkeep

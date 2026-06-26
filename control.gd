@@ -1,16 +1,16 @@
 extends Control
 
 # For random board generation ===================
-var boardWidth = 15;
-var boardHeight = 15;
-var numOfCorrectCells = 1;
+var boardWidth = GameSettings.width;
+var boardHeight = GameSettings.height;
+var numOfCorrectCells = GameSettings.numOfCorrectCells;
 # ===============================================
 var board = [];
 var correctCells = [];
 var columnClues = {}
 var rowClues = {}
 @onready var grid = $GameCenterContainer/GridContainer
-@onready var center_container =  $CenterContainer
+@onready var center_container =  $WinCenterContainer
 const IMAGE_X = preload("res://x-transparent-background-red.png")
 
 # Called when the node enters the scene tree for the first time.
@@ -23,8 +23,9 @@ func _process(delta: float) -> void:
 	pass
 
 func create_board():
+	var level_selection = GameSettings.difficulty
 	# If file name or valid number entered (1-4), choose a board, otherwise generate random
-	if choose_board("game_board.json"):
+	if choose_board(level_selection+1):
 		calculate_clues()
 		find_correct_cells()
 		print_board_data()
@@ -158,8 +159,8 @@ func check_win():
 
 func choose_board(difficulty):
 	# Load from JSON file
-	if difficulty is String:
-		load_board_from_file(difficulty)
+	if difficulty == 5:
+		load_board_from_file(GameSettings.gameFilePath)
 		return true
 		
 	# Smiley-face

@@ -24,7 +24,7 @@ offset_bottom = 591.0
 [node name="GridContainer" type="GridContainer" parent="GameCenterContainer" unique_id=1874621849]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1691755878]
+[node name="WinCenterContainer" type="CenterContainer" parent="." unique_id=1691755878]
 visible = false
 layout_mode = 0
 offset_left = 2.0
@@ -32,12 +32,12 @@ offset_top = -3.0
 offset_right = 1154.0
 offset_bottom = 647.0
 
-[node name="WinPanel" type="Panel" parent="CenterContainer" unique_id=624616160]
+[node name="WinPanel" type="Panel" parent="WinCenterContainer" unique_id=624616160]
 custom_minimum_size = Vector2(350, 150)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ig7tw")
 
-[node name="Label" type="Label" parent="CenterContainer/WinPanel" unique_id=989952641]
+[node name="Label" type="Label" parent="WinCenterContainer/WinPanel" unique_id=989952641]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 21.0
