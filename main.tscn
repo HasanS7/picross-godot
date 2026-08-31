@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://gngckdnf24yi"]
 
 [ext_resource type="Script" uid="uid://bn37tjykpyfx3" path="res://control.gd" id="1_ig7tw"]
+[ext_resource type="FontFile" uid="uid://cuk7s25d8ycu4" path="res://Press_Start_2P_Font/PressStart2P-Regular.ttf" id="2_0xm2m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig7tw"]
 bg_color = Color(0, 0, 0, 0.27450982)
@@ -50,3 +51,15 @@ theme_override_font_sizes/font_size = 72
 text = "VICTORY"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="." unique_id=2067408106]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 98.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0.86191416, 0.10417066, 0, 1)
+theme_override_fonts/font = ExtResource("2_0xm2m")
+text = "Back"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

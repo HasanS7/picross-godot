@@ -35,7 +35,7 @@ func create_board():
 	if numOfCorrectCells > boardHeight * boardWidth or numOfCorrectCells < 0:
 		print("Invalid number of correct cells! (", numOfCorrectCells, ")");
 		return
-		# DO SOMETHING ELSE HERE, CAUSES ERROR
+		# DO SOMETHING ELSE HERE, CAUSES CRASH
 	
 	
 	# Generate random cells, store in correctCells
@@ -233,3 +233,7 @@ func load_board_from_file(file_path):
 		print("Successfully loaded Picross matrix: ", board)
 	else:
 		print("JSON Parse Error: ", json.get_error_message())
+
+
+func _on_back_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://mainMenu.tscn")

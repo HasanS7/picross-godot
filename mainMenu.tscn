@@ -74,7 +74,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_83s16")
 text = "Width"
 
-[node name="SpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/WidthRow" unique_id=1386569744]
+[node name="WSpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/WidthRow" unique_id=1386569744]
 layout_mode = 2
 min_value = 1.0
 max_value = 50.0
@@ -88,7 +88,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_83s16")
 text = "Height"
 
-[node name="SpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/HeightRow" unique_id=91152774]
+[node name="HSpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/HeightRow" unique_id=91152774]
 layout_mode = 2
 min_value = 1.0
 max_value = 50.0
@@ -102,7 +102,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_83s16")
 text = "Number of Cells"
 
-[node name="SpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/NumCorrectCellsRow" unique_id=1638228943]
+[node name="CSpinBox" type="SpinBox" parent="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/NumCorrectCellsRow" unique_id=1638228943]
 layout_mode = 2
 min_value = 1.0
 max_value = 2500.0
@@ -143,6 +143,8 @@ file_mode = 0
 
 [connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="item_selected" from="CenterContainer/Panel/MarginContainer/VBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="value_changed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/WidthRow/WSpinBox" to="." method="_on_w_spin_box_value_changed"]
+[connection signal="value_changed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/CustomSettingsContainer/VBoxContainer/HeightRow/HSpinBox" to="." method="_on_h_spin_box_value_changed"]
 [connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/LoadLevelRow/LoadLevelButton" to="." method="_on_load_level_button_pressed"]
 [connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="file_selected" from="LevelFileDialog" to="." method="_on_level_file_dialog_file_selected"]
