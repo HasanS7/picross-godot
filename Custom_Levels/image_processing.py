@@ -5,14 +5,14 @@ from pathlib import Path
 
 """
 Instructions:
-Place image files in './Custom_Levels/source_images/' folder. Make sure the outside of the image is light and the actual shape is dark for the image processing to recognize the shape.
-Run 'python .\image_processing.py' command in the root directory
+Place image files in 'Custom_Levels/source_images/' folder. Make sure the outside of the image is light and the actual shape is dark for the image processing to recognize the shape.
+Run 'python .\image_processing.py' command in the Custom_Levels directory
 Follow command line instructions
-JSON level file will be exported to './Custom_Levels/' folder. Select the JSON file from this folder when loading a level in game
+JSON level file will be exported to  the Custom_Levels folder. Select the JSON file from this folder when loading a level in game
 """
 
-INPUT_IMAGE_PATH = './Custom_Levels/source_images/'
-OUTPUT_PATH = './Custom_Levels/'
+INPUT_IMAGE_PATH = './source_images/'
+OUTPUT_PATH = './'
 
 def image_to_picross_grid(image_path, target_width=32, target_height=32, threshold_val=127):
     """
