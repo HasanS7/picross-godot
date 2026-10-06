@@ -6,6 +6,7 @@ var width = 10
 var height = 10
 var numOfCorrectCells = 30
 var gameFilePath = ''
+var sourceFilePath = ''
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

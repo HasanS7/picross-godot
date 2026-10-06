@@ -234,6 +234,5 @@ func load_board_from_file(file_path):
 	else:
 		print("JSON Parse Error: ", json.get_error_message())
 
-
 func _on_back_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://mainMenu.tscn")

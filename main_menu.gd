@@ -26,18 +26,18 @@ func _process(delta: float) -> void:
 # Start the game (Play button)
 func _on_play_pressed() -> void:
 	# If no file is loaded while in load file mode, do nothing
-	if difficulty_option.selected == 4 and not GameSettings.gameFilePath:
+	if difficulty_option.selected == 4 and not GameSettings.sourceFilePath:
 		print('No file selected')
 		return
 	
 	print('Difficulty: ', difficulty_option.selected)
 	# Store values in external file
-	GameSettings.difficulty = difficulty_option.selected
+	GameSettings.difficulty = difficulty_option.selected # (Redundant)
 	GameSettings.width = int(width_spinbox.value)
 	GameSettings.height = int(height_spinbox.value)
 	GameSettings.numOfCorrectCells = int(correct_cells_spinbox.value)
 	
-	get_tree().change_scene_to_file("res://main.tscn")
+	get_tree().change_scene_to_file("res://gameScene.tscn")
 
 # Quit game
 func _on_exit_pressed() -> void:
@@ -49,13 +49,21 @@ func _on_option_button_item_selected(index: int) -> void:
 	
 	if index == 4: load_level_row.show()
 	else: load_level_row.hide()
+	
+	GameSettings.difficulty = difficulty_option.selected # Store the difficulty option whenever it is changed
+
 
 func _on_load_level_button_pressed() -> void:
+	level_file_dialog.current_dir = "res://Custom_Levels/source_images/"
 	level_file_dialog.popup_centered()
 
 func _on_level_file_dialog_file_selected(path: String) -> void:
-	GameSettings.gameFilePath = path
-	load_level_label.text = path.get_file()
+	GameSettings.sourceFilePath = path # Update stored file name
+	#load_level_label.text = path.get_file() # Update file display
+	
+	get_tree().change_scene_to_file("res://customImageScene.tscn")
+	
+
 
 # Update correct cells spinbox max accordingly whenever height or width values change
 func _on_w_spin_box_value_changed(value: float) -> void:
