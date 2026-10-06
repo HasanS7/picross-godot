@@ -4,8 +4,7 @@ import json
 from pathlib import Path
 import sys
 
-custom_levels_dir = Path(__file__).resolve().parent.parent / "Custom_Levels"
-OUTPUT_PATH = custom_levels_dir 
+OUTPUT_PATH = Path("exports")
 
 def image_to_picross_grid(image_path, target_width=32, target_height=32, threshold_val=127):
     """
@@ -52,6 +51,8 @@ if __name__ == "__main__":
 
     # If export is true, export the data to JSON file
     if export.lower() == 'true':
+        OUTPUT_PATH.mkdir(parents=True, exist_ok=True) # Create the parent directory if it doesn't exist
+
         output_filename = Path(img_filename).stem
 
         with open(OUTPUT_PATH / (output_filename + '.json'), "w") as f:

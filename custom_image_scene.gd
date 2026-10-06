@@ -16,10 +16,10 @@ func _process(delta: float) -> void:
 
 func run_python_script(source_file_path: String, width: int, height: int, threshold: int, export: bool) -> void:
 	# Pathing for exported games
-	var interpreter_path: String = "python3" # Or absolute path to a local bundle
-	var script_path: String = ProjectSettings.globalize_path("res://scripts/image_processing.py")
+	var interpreter_path: String = "python" # Or absolute path to a local bundle
+	#var script_path: String = ProjectSettings.globalize_path("res://scripts/image_processing.py")
 	
-	var arguments: Array[String] = [script_path]
+	var arguments: Array[String] = ['scripts/image_processing.py']
 	var output: Array = []
 	
 	# Apend arguments array with actual arguments
@@ -42,7 +42,8 @@ func run_python_script(source_file_path: String, width: int, height: int, thresh
 		if export:
 			# Set the gameFilePath variable to the JSON file we just exported
 			var fname = GameSettings.sourceFilePath.split('/')[-1].split('.')[0] + '.json'
-			GameSettings.gameFilePath = "res://Custom_Levels/" + fname
+			GameSettings.gameFilePath = "exports/" + fname
+			
 		
 	else:
 		print("Failed to run Python script. Exit code: ", exit_code)

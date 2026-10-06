@@ -22,7 +22,4 @@ mono_crash.*.json
 .DS_Store
 Thumbs.db
 
-# Custom local levels
-/Custom_Levels/*
-!/Custom_Levels/.gitkeep
 /builds/*

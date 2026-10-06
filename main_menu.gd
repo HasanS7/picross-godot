@@ -54,12 +54,12 @@ func _on_option_button_item_selected(index: int) -> void:
 
 
 func _on_load_level_button_pressed() -> void:
+	level_file_dialog.add_filter("*.png, *.jpg, *.jpeg ; Image Files")
 	level_file_dialog.popup_centered()
 
 func _on_level_file_dialog_file_selected(path: String) -> void:
 	GameSettings.sourceFilePath = path # Update stored file name
 	#load_level_label.text = path.get_file() # Update file display
-	print("GameSettings.sourceFilePath: ", GameSettings.sourceFilePath)
 	
 	get_tree().change_scene_to_file("res://customImageScene.tscn")
 	
