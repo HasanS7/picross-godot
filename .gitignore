@@ -25,6 +25,4 @@ Thumbs.db
 # Custom local levels
 /Custom_Levels/*
 !/Custom_Levels/.gitkeep
-/Custom_Levels/source_images/*
-!/Custom_Levels/source_images/.gitkeep
 /builds/*

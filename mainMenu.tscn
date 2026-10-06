@@ -141,6 +141,7 @@ text = "Exit"
 [node name="LevelFileDialog" type="FileDialog" parent="." unique_id=584484947]
 title = "Open a File"
 file_mode = 0
+access = 2
 
 [connection signal="pressed" from="CenterContainer/Panel/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="item_selected" from="CenterContainer/Panel/MarginContainer/VBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]

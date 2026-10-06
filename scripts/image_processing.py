@@ -5,7 +5,6 @@ from pathlib import Path
 import sys
 
 custom_levels_dir = Path(__file__).resolve().parent.parent / "Custom_Levels"
-INPUT_IMAGE_PATH = custom_levels_dir / 'source_images'
 OUTPUT_PATH = custom_levels_dir 
 
 def image_to_picross_grid(image_path, target_width=32, target_height=32, threshold_val=127):
@@ -42,10 +41,10 @@ def image_to_picross_grid(image_path, target_width=32, target_height=32, thresho
 if __name__ == "__main__":
     # Get variables from external
     _, file, width, height, threshold, export = sys.argv
-
+    
     img_filename = file.split('/')[-1]
 
-    grid = image_to_picross_grid(INPUT_IMAGE_PATH / img_filename, int(width), int(height), int(threshold))
+    grid = image_to_picross_grid(file, int(width), int(height), int(threshold))
 
     # Print out the clean Picross board grid
     for row in grid:
